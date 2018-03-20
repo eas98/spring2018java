@@ -4,16 +4,44 @@ import java.io.PrintStream;
 import java.util.Random; 
 
 public class Matrix {
-	Integer m_rows; 
-	Integer m_cols;
-	Integer [][] m_data;
+	int m_rows; 
+	int m_cols;
+	int [][] m_data;
 	public Matrix(Integer n, Integer m) {
 		m_rows = n;
 		m_cols = m;
-		m_data = new Integer [n][m]; 
+		m_data = new int[n][m]; 
 	}
 	public Matrix(MatrixDimension dimension) {
 		this(dimension.getRows(),dimension.getCols());
+	}
+	public Matrix(int[][] srcMatrixData) {
+		this(srcMatrixData.length,srcMatrixData[0].length);
+		for(int i=0;i<m_rows;i++) {
+			for(int j=0;j<m_cols;j++) {
+				m_data[i][j] = srcMatrixData[i][j];
+			}	
+		}
+	}
+	
+	public int at(int i, int j) {
+		return m_data[i][j];
+	}
+	
+	public boolean equals(Matrix right) {
+		if(m_data.length == right.m_data.length) {
+			if(m_data[0].length == right.m_data[0].length) {
+				for(int i=0; i< m_rows;i++) {
+					for(int j=0; j< m_cols;j++) {
+						if(m_data[i][j] != right.m_data[i][j]) {
+							return false;
+						}					
+					}
+				}
+				return true;
+			}
+		}
+		return false;
 	}
 	 
 	
@@ -26,6 +54,7 @@ public class Matrix {
 			 } 
 		 }
 	}
+	
 	public Matrix add(Matrix right) throws MatrixDimensionException {
 		boolean equalDemensions = 
 				this.m_cols == right.m_cols && 
