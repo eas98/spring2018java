@@ -1,16 +1,16 @@
 package part3;
 
 public class MatrixDimension {
-	final Integer m_rows; 
-	final Integer m_cols;
-	MatrixDimension(Integer rows,Integer cols) {
+	final int m_rows; 
+	final int m_cols;
+	MatrixDimension(int rows,int cols) {
 		m_rows = rows;
 		m_cols = cols;
 	}
-	Integer getRows() {
+	public int getRows() {
 		return m_rows;
 	}
-	Integer getCols() {
+	public int getCols() {
 		return m_cols;
 	}
 }

@@ -1,6 +1,8 @@
 package part3;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.util.List;
 import java.util.logging.Logger;
@@ -13,14 +15,38 @@ public class FileBasedMatrixDimensionProvider implements MatrixDimensionProvider
 	FileBasedMatrixDimensionProvider(String filepath) {
 		m_filePath = filepath;
 	}
+	
+	private boolean doesFileExist(String fullFilePath) {
+		File file = new File(fullFilePath);
+		return file.exists();	
+	}
+	
+	private Path getFullFilePath( ) {
+		if(m_filePath == null || m_filePath.isEmpty())
+			return null;
+		File file = new File(m_filePath);
+		if(file.isAbsolute())
+			return Paths.get(m_filePath);
+		
+         String dir = System.getProperty("user.dir");
+         return Paths.get(dir,m_filePath);        	
+	}
+	
 
 	@Override
 	public MatrixDimension getDimension() {
-		MatrixDimension dimension = null;
+		
 		int rows = 0;
 		int cols = 0;
 		// TODO Auto-generated method stub
-	    Path path = Paths.get(m_filePath);
+		Path path = getFullFilePath();
+		if(path == null)
+			return null;
+		if(!doesFileExist(path.toString())) {
+			m_logger.warning(path.toString()+ " does not exist!");
+			return null;
+		}	
+		
 		try {
 			List<String> lines = Files.readAllLines(path);
 			for(String line:lines) {
@@ -44,11 +70,13 @@ public class FileBasedMatrixDimensionProvider implements MatrixDimensionProvider
 				if(rows> 0 && cols > 0) {
 					break;
 				}
-			}	
+			}
+			if(cols > 0 && rows > 0 )
+				return new MatrixDimension(rows,cols); 
 		} catch(IOException e) {
 			m_logger.warning("failed to read from file:"+m_filePath);
 		}
-		return dimension;
+		return null;
 	}
 
 }
