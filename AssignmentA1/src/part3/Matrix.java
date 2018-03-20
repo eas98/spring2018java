@@ -42,16 +42,16 @@ public class Matrix {
 		return result;
 	}
 	public Matrix multiply(Matrix right) throws MatrixDimensionException {
-		boolean multipliable = m_cols == right.m_rows;
+		boolean multipliable = m_rows == right.m_cols;
 		if(!multipliable) {
-			throw new MatrixDimensionException("Number of column in left Matrix has to equal number of rows in right Matrix");
+			throw new MatrixDimensionException("Number of rows in left Matrix has to equal number of columns in right Matrix");
 		}
 		Matrix result = new Matrix(m_rows, right.m_cols);
 		for(int i=0;i<m_rows;i++) {
 			int cellValue = 0;
 			for(int j=0;j<right.m_cols;j++) {
-				for(int ii=0;ii<m_rows;ii++) {
-					cellValue += m_data[i][ii] * right.m_data[j][ii];	
+				for(int ii=0;ii<right.m_rows;ii++) {
+					cellValue += m_data[i][ii] * right.m_data[ii][j];	
 				}
 				result.m_data[i][j] = cellValue;
 			}
