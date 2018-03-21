@@ -56,6 +56,25 @@ class MatrixTests {
 			Matrix matrixExpectedResult = new Matrix(matrixExpectedResultData);
 			assertTrue(matrixExpectedResult.equals(matrixResult));
 	}
+	
+	@Test
+	void testAdd3X3by2X3ShouldThrowException() {
+		assertThrows(MatrixDimensionException.class, ()->{
+			int[][] matrixLeftData = {
+					{1,2,3},
+					{4,5,6},
+					{7,8,9},
+				};
+			int[][] matrixRightData = {
+					{11,22,33},
+					{44,55,66},
+				};
+			Matrix matrixLeft = new Matrix(matrixLeftData);
+			Matrix matrixRight = new Matrix(matrixRightData);
+			matrixLeft.add(matrixRight);
+		
+		});
+	}
 	@Test
 	void testAdd2X2By2X2() throws MatrixDimensionException{
 		int[][] matrixLeftData = {
