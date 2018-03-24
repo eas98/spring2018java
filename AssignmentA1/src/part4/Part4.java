@@ -1,6 +1,5 @@
 package part4;
 
-import java.awt.List;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -32,6 +31,7 @@ public class Part4 {
 				Integer nData = Integer.parseInt(strNumber);
 				listNumbersInput.add(nData);
 			}
+			scanner.close();
 			unsortedData = (Integer[])listNumbersInput.toArray();
 		}
 		ArraySorter sorter = new ArrayPositionRetainerSorter();
