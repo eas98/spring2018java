@@ -13,16 +13,23 @@ public class Part2 {
 			subString =args[1];
 		}
 		
-		while(searchSpace !=null && subString != null) {
-			System.out.print("search space string:");
+		while(searchSpace ==null || subString == null) {
+			System.out.print("hayStack string:");
 			Scanner scanner = new Scanner(System.in);
-		    String largeString = scanner.nextLine();
-		    System.out.print("search string:");
+		    searchSpace = scanner.nextLine();
+		    System.out.println("needle string:");
+		    subString = scanner.nextLine();
+		    scanner.close();
+		    System.out.println();
 		}
-			
-		SubstringFrequencySearcher searcher = new HayStack(searchSpace);
+		
+		long nStart = System.currentTimeMillis();
+		SubstringFrequencySearcher searcher = new HayStackNeedleSearcher(searchSpace);
 		int nFrequency = searcher.findFrequency(subString);
-		System.out.println("Found %d instances",nFrequency);
+		long nEnd = System.currentTimeMillis();
+		long nDuration = nEnd - nStart;
+		System.out.printf("Found %d instances, It took %d miliseconds.",nFrequency,nDuration);
+		System.out.println();
 	}
 
 }

@@ -1,22 +1,20 @@
 package part2;
 
-public class HayStack implements SubstringFrequencySearcher{
+public class HayStackNeedleSearcher implements SubstringFrequencySearcher{
 	String m_searchSpace;
-	HayStack(String searchSpace) {
-		
+	HayStackNeedleSearcher(String searchSpace) {
+		m_searchSpace = searchSpace;
 	}
 	
 	@Override
 	public int findFrequency(String subString) {
-		if(subString == null && m_searchSpace == null)
-			return 1;
 		if(m_searchSpace == null)
 			return 0;
 		if(subString == null)
 			return 0;
 		if(subString.isEmpty() && m_searchSpace.isEmpty())
 			return 1;
-		if(!m_searchSpace.isEmpty())
+		if(subString.isEmpty())
 			return m_searchSpace.length();
 		
 		if(m_searchSpace != null) {
@@ -24,7 +22,7 @@ public class HayStack implements SubstringFrequencySearcher{
 			int nMatchedIndex = 0;
 			for(int i=0;i<m_searchSpace.length();i++) {
 				char ch = m_searchSpace.charAt(i);
-				if(ch == subString.charAt(nMatchedIndex)) {
+				if(Character.toLowerCase(ch) == Character.toLowerCase(subString.charAt(nMatchedIndex))) {
 					nMatchedIndex++;
 					if(subString.length() == nMatchedIndex) {
 						nFrequency++;
