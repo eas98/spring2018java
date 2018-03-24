@@ -1,0 +1,25 @@
+***part5***
+------
+data:[-10, -9, -8, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+Reversed Data:[10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0, -1, -2, -3, -4, -5, -6, -7, -8, -9, -10]
+LinkList:[-10, -9, -8, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+Reversed LinkList:[10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0, -1, -2, -3, -4, -5, -6, -7, -8, -9, -10]
+LinkList Build Passes:true
+ReverseList Build Passes:true
+------
+------
+data:[-2, -1, 0, 1, 2]
+Reversed Data:[2, 1, 0, -1, -2]
+LinkList:[-2, -1, 0, 1, 2]
+Reversed LinkList:[2, 1, 0, -1, -2]
+LinkList Build Passes:true
+ReverseList Build Passes:true
+------
+------
+data:[10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+Reversed Data:[100, 90, 80, 70, 60, 50, 40, 30, 20, 10]
+LinkList:[10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+Reversed LinkList:[100, 90, 80, 70, 60, 50, 40, 30, 20, 10]
+LinkList Build Passes:true
+ReverseList Build Passes:true
+------
