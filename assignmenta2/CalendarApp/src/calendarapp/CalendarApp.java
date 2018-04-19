@@ -23,7 +23,7 @@ public class CalendarApp {
         JLabel label = new JLabel("Save your Appointments");
     	panelTop.add(label,c);
     	c.weighty = 0.2;
-    	c.gridy = 1;
+    	c.gridy = 0;
     	
         JXMonthView  monthView = new JXMonthView();
         monthView.setTraversable(true);
@@ -36,26 +36,32 @@ public class CalendarApp {
             }
         });
         monthView.setSelectionMode(SelectionMode.SINGLE_INTERVAL_SELECTION);    	
-        panelTop.add(monthView,c);
-
         c.fill = GridBagConstraints.HORIZONTAL;
-        c.weighty = 0.2;
+        c.weighty = 0.6;
         c.weightx = 0.6;
     	c.gridy = 1;
-    	c.gridx = 1;
-    	
+    	c.gridx = 0;
+        panelTop.add(monthView,c);
+
+        
     	JTextArea textField = new JTextArea("Enter\nYour Appointment Note");
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.weighty = 0.6;
+        c.weightx = 0.6;
+    	c.gridy = 1;
+    	c.gridx = 2;
     	panelTop.add(textField,c);
     	
     	c.fill = GridBagConstraints.VERTICAL;
-    	c.weighty=0.8;
-    	c.gridy = 2;
+    	c.weighty=0.3;
+    	c.gridy = 3;
+    	c.gridx = 2;
     	JButton okButton = new JButton("Ok");
     	panelTop.add(okButton,c);
     	
     	c.fill = GridBagConstraints.HORIZONTAL;
-    	c.weighty=0.8;
-    	c.gridx = 2;
+    	c.weighty=0.3;
+    	c.gridx = 5;
     	
     	JButton cancelButton = new JButton("Cancel");
     	panelTop.add(cancelButton,c);
