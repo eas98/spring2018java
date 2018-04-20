@@ -18,11 +18,12 @@ public class CalendarApp {
     private static void addControls(JFrame frame) {
         JPanel panelTop = new JPanel(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
-        c.fill = GridBagConstraints.VERTICAL;
-
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.anchor = GridBagConstraints.CENTER;
+        c.gridx = 1;
         JLabel label = new JLabel("Save your Appointments");
     	panelTop.add(label,c);
-    	c.weighty = 0.2;
+    	c.weighty = 0.1;
     	c.gridy = 0;
     	
         JXMonthView  monthView = new JXMonthView();
@@ -36,33 +37,40 @@ public class CalendarApp {
             }
         });
         monthView.setSelectionMode(SelectionMode.SINGLE_INTERVAL_SELECTION);    	
-        c.fill = GridBagConstraints.HORIZONTAL;
+        c.anchor = GridBagConstraints.WEST;
+        c.fill = GridBagConstraints.NONE;
         c.weighty = 0.6;
-        c.weightx = 0.6;
+        c.weightx = .4;
     	c.gridy = 1;
     	c.gridx = 0;
         panelTop.add(monthView,c);
 
         
     	JTextArea textField = new JTextArea("Enter\nYour Appointment Note");
-        c.fill = GridBagConstraints.HORIZONTAL;
+    	c.anchor = GridBagConstraints.EAST;
+    	c.fill = GridBagConstraints.NONE;
         c.weighty = 0.6;
-        c.weightx = 0.6;
+        c.weightx = 0.4;
     	c.gridy = 1;
-    	c.gridx = 2;
+    	c.gridx = 4;
     	panelTop.add(textField,c);
     	
-    	c.fill = GridBagConstraints.VERTICAL;
-    	c.weighty=0.3;
-    	c.gridy = 3;
-    	c.gridx = 2;
+    	c.anchor = GridBagConstraints.WEST;
+    	c.fill = GridBagConstraints.NONE;
+    	c.weighty=0.1;
+    	c.weightx=0.4;
+    	c.gridy = 2;
+    	c.gridx = 0;
+    	
     	JButton okButton = new JButton("Ok");
     	panelTop.add(okButton,c);
     	
-    	c.fill = GridBagConstraints.HORIZONTAL;
-    	c.weighty=0.3;
-    	c.gridx = 5;
-    	
+    	c.fill = GridBagConstraints.NONE;
+    	c.weighty=0;
+    	c.weightx=.4;
+    	c.gridy = 2;
+    	c.gridx = 4;
+    	c.anchor = GridBagConstraints.EAST;
     	JButton cancelButton = new JButton("Cancel");
     	panelTop.add(cancelButton,c);
     	
