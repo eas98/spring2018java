@@ -48,7 +48,8 @@ public class CalendarApp {
         
         
         
-    	JTextArea textField = new JTextArea("Enter\nYour Appointment Note\n\n\n\n\n");
+    	JTextArea textField = new JTextArea(12,15);
+    	textField.setText("Enter\nYour Appointment Note");
     	//c.anchor = GridBagConstraints.EAST;
     	c.fill = GridBagConstraints.HORIZONTAL;
     	
@@ -71,19 +72,19 @@ public class CalendarApp {
     	JPanel subPanelBottom = new JPanel(new GridBagLayout());
     	
         
-    	//c.anchor = GridBagConstraints.WEST;
+    	c.anchor = GridBagConstraints.WEST;
     	c.fill = GridBagConstraints.HORIZONTAL;
-    	c.weighty=0.1;
+    	c.weighty=0.3;
     	c.weightx=0.4;
     	c.gridy = 2;
-    	c.gridx = 0;
+    	c.gridx = 1;
     	
     	JButton okButton = new JButton("Ok");
     	subPanelBottom.add(okButton,c);
     	
     	c.fill = GridBagConstraints.HORIZONTAL;
-    	//c.anchor = GridBagConstraints.EAST;
-    	c.weighty=0;
+    	c.anchor = GridBagConstraints.EAST;
+    	c.weighty=.3;
     	c.weightx=.4;
     	c.gridy = 2;
     	c.gridx = 4;
