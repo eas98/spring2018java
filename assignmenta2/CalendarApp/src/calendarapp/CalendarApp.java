@@ -19,7 +19,7 @@ public class CalendarApp {
         JPanel panelTop = new JPanel(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.HORIZONTAL;
-        c.anchor = GridBagConstraints.CENTER;
+        //c.anchor = GridBagConstraints.CENTER;
         c.gridx = 1;
         JLabel label = new JLabel("Save your Appointments");
     	panelTop.add(label,c);
@@ -37,25 +37,25 @@ public class CalendarApp {
             }
         });
         monthView.setSelectionMode(SelectionMode.SINGLE_INTERVAL_SELECTION);    	
-        c.anchor = GridBagConstraints.WEST;
+        //c.anchor = GridBagConstraints.WEST;
         c.fill = GridBagConstraints.NONE;
         c.weighty = 0.6;
-        c.weightx = .4;
+        c.weightx = .6;
     	c.gridy = 1;
     	c.gridx = 0;
         panelTop.add(monthView,c);
 
         
-    	JTextArea textField = new JTextArea("Enter\nYour Appointment Note");
-    	c.anchor = GridBagConstraints.EAST;
+    	JTextArea textField = new JTextArea("Enter\nYour Appointment Note\n\n\n\n\n");
+    	//c.anchor = GridBagConstraints.EAST;
     	c.fill = GridBagConstraints.NONE;
-        c.weighty = 0.6;
+        c.weighty = 2;
         c.weightx = 0.4;
     	c.gridy = 1;
     	c.gridx = 4;
     	panelTop.add(textField,c);
     	
-    	c.anchor = GridBagConstraints.WEST;
+    	//c.anchor = GridBagConstraints.WEST;
     	c.fill = GridBagConstraints.NONE;
     	c.weighty=0.1;
     	c.weightx=0.4;
@@ -66,11 +66,12 @@ public class CalendarApp {
     	panelTop.add(okButton,c);
     	
     	c.fill = GridBagConstraints.NONE;
+    	//c.anchor = GridBagConstraints.EAST;
     	c.weighty=0;
     	c.weightx=.4;
     	c.gridy = 2;
     	c.gridx = 4;
-    	c.anchor = GridBagConstraints.EAST;
+    	
     	JButton cancelButton = new JButton("Cancel");
     	panelTop.add(cancelButton,c);
     	
