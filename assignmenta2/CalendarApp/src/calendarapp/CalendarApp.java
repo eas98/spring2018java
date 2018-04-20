@@ -16,17 +16,22 @@ import org.jdesktop.swingx.calendar.DateSelectionModel.SelectionMode;
 
 public class CalendarApp {
     private static void addControls(JFrame frame) {
-        JPanel panelTop = new JPanel(new GridBagLayout());
-        GridBagConstraints c = new GridBagConstraints();
-        c.fill = GridBagConstraints.HORIZONTAL;
+        JPanel panelMain = new JPanel(new GridBagLayout());
+        
+        GridBagConstraints c1 = new GridBagConstraints();
+        c1.fill = GridBagConstraints.HORIZONTAL;
         //c.anchor = GridBagConstraints.CENTER;
-        c.gridx = 1;
+        c1.gridx = 1;
+        
+        JPanel subPanelTop = new JPanel(new GridBagLayout());
+        
         JLabel label = new JLabel("Save your Appointments");
-    	panelTop.add(label,c);
-    	c.weighty = 0.1;
-    	c.gridy = 0;
+        
+        subPanelTop.add(label,c1);
+    
+    	JPanel subPanelMiddle = new JPanel(new GridBagLayout());
     	
-        JXMonthView  monthView = new JXMonthView();
+    	JXMonthView  monthView = new JXMonthView();
         monthView.setTraversable(true);
         monthView.addPropertyChangeListener(new PropertyChangeListener() {
             @Override
@@ -38,34 +43,45 @@ public class CalendarApp {
         });
         monthView.setSelectionMode(SelectionMode.SINGLE_INTERVAL_SELECTION);    	
         //c.anchor = GridBagConstraints.WEST;
-        c.fill = GridBagConstraints.NONE;
-        c.weighty = 0.6;
-        c.weightx = .6;
-    	c.gridy = 1;
-    	c.gridx = 0;
-        panelTop.add(monthView,c);
-
+        GridBagConstraints c = new GridBagConstraints();
+        c.fill = GridBagConstraints.HORIZONTAL;
+        
+        
         
     	JTextArea textField = new JTextArea("Enter\nYour Appointment Note\n\n\n\n\n");
     	//c.anchor = GridBagConstraints.EAST;
-    	c.fill = GridBagConstraints.NONE;
-        c.weighty = 2;
-        c.weightx = 0.4;
-    	c.gridy = 1;
-    	c.gridx = 4;
-    	panelTop.add(textField,c);
+    	c.fill = GridBagConstraints.HORIZONTAL;
     	
+        c.weightx = 0.4;
+        c.gridy = 0;
+    	c.gridx = 1;
+    	
+    	subPanelMiddle.add(monthView,c);
+    	
+        c.weightx = .4;
+        c.gridy = 0;
+        c.gridx = 4;
+    	
+    	subPanelMiddle.add(textField,c);
+    	
+    	GridBagConstraints c2 = new GridBagConstraints();
+    	c2.fill = GridBagConstraints.VERTICAL;
+    	
+    	
+    	JPanel subPanelBottom = new JPanel(new GridBagLayout());
+    	
+        
     	//c.anchor = GridBagConstraints.WEST;
-    	c.fill = GridBagConstraints.NONE;
+    	c.fill = GridBagConstraints.HORIZONTAL;
     	c.weighty=0.1;
     	c.weightx=0.4;
     	c.gridy = 2;
     	c.gridx = 0;
     	
     	JButton okButton = new JButton("Ok");
-    	panelTop.add(okButton,c);
+    	subPanelBottom.add(okButton,c);
     	
-    	c.fill = GridBagConstraints.NONE;
+    	c.fill = GridBagConstraints.HORIZONTAL;
     	//c.anchor = GridBagConstraints.EAST;
     	c.weighty=0;
     	c.weightx=.4;
@@ -73,9 +89,21 @@ public class CalendarApp {
     	c.gridx = 4;
     	
     	JButton cancelButton = new JButton("Cancel");
-    	panelTop.add(cancelButton,c);
+    	subPanelBottom.add(cancelButton,c);
     	
-    	frame.getContentPane().add(panelTop);
+    	GridBagConstraints cmain = new GridBagConstraints();
+    	cmain.fill = GridBagConstraints.VERTICAL;
+    	cmain.anchor = GridBagConstraints.NORTH;
+    	cmain.gridy=1;
+    	panelMain.add(subPanelTop,cmain);
+    	cmain.anchor = GridBagConstraints.CENTER;
+    	cmain.gridy=2;
+    	panelMain.add(subPanelMiddle,cmain);
+    	cmain.anchor = GridBagConstraints.SOUTH;
+    	cmain.gridy=3;
+    	panelMain.add(subPanelBottom,cmain);
+    	
+    	frame.getContentPane().add(panelMain);
     }
 	private static void createAndShowGUI() {
         //Create and set up the window.
