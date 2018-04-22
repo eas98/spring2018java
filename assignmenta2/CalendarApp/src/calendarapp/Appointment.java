@@ -38,4 +38,10 @@ public class Appointment {
 		LocalDate appointmentDate = LocalDate.parse(strAppointmetnDate, formatter);
 		return appointmentDate;
 	}
+	
+	public static String getDateAsString(LocalDate date) {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		String formattedString = date.format(formatter);
+		return formattedString;
+	}
 }

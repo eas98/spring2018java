@@ -8,8 +8,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
+
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
@@ -37,6 +36,14 @@ public class CalendarApp {
 		AppointmentReader reader = new XmlAppointmentReader();
 		mapDateToNote = AppointmentHelper.convertAppointmentsToMap(reader.getAppointments());
 	}
+	private void setCurrentNote(LocalDate date) {
+		Appointment appointment = mapDateToNote.get(Appointment.getDateAsString(date));
+		if(appointment != null) {
+			textField.setText(appointment.getAppointmentNote());	
+		} else {
+			textField.setText(defaultAppointmentNote);
+		}
+	}
 	private Component addTopPanel() {
 		
 		GridBagConstraints c1 = new GridBagConstraints();
@@ -60,11 +67,11 @@ public class CalendarApp {
     	
     	monthView = new JXMonthView();
         monthView.setTraversable(true);
-        /*monthView.getSelectionModel().addDateSelectionListener(new DateSelectionListener() {
+        monthView.getSelectionModel().addDateSelectionListener(new DateSelectionListener() {
             public void valueChanged(DateSelectionEvent e) {
             	handleDateSelectionChanged();
             }
-        });*/
+        });
         
         monthView.setSelectionMode(SelectionMode.SINGLE_SELECTION);
         monthView.setBorder(BorderFactory.createCompoundBorder(
@@ -76,7 +83,7 @@ public class CalendarApp {
         
         
     	textField = new JTextArea(12,15);
-    	textField.setText("Enter\nYour Appointment Note");
+    	
     	textField.setBorder(BorderFactory.createCompoundBorder(
     			textField.getBorder(), 
     	        BorderFactory.createEmptyBorder(10, 5, 10, 5)));
@@ -88,9 +95,12 @@ public class CalendarApp {
             	handleAppointmentNoteChanged();
             }
             public void changedUpdate(DocumentEvent e) {
-                //handleAppointmentNoteChanged();
+                handleAppointmentNoteChanged();
             }
     	});
+    	Date todayDate = new Date();
+    	monthView.setSelectionDate(todayDate);
+    	setCurrentNote(getCurrentLocalDate());
     	
     	c.anchor = GridBagConstraints.EAST;
     	c.fill = GridBagConstraints.HORIZONTAL;
@@ -215,8 +225,8 @@ public class CalendarApp {
 	}
 	
 	void handleDateSelectionChanged() {
-		
-		//appointmentNoteChanged = false;
+		LocalDate selectedLocalDate = getCurrentLocalDate();
+		setCurrentNote(selectedLocalDate);
 	}
 	
 	LocalDate getCurrentLocalDate() {
@@ -224,7 +234,6 @@ public class CalendarApp {
 		if(selectedDate == null) {
 			selectedDate = new Date();
 		}
-		System.out.println(selectedDate.toString());
 		LocalDate selectedLocalDate = selectedDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 		return selectedLocalDate;
 	

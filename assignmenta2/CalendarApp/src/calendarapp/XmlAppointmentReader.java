@@ -14,6 +14,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.CDATASection;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
@@ -28,7 +29,11 @@ public class XmlAppointmentReader implements AppointmentReader {
 		{
 			Document doc = getDocument();
 			if(doc != null) {
-				NodeList nodelist = doc.getDocumentElement().getChildNodes();
+				Element root = doc.getDocumentElement();
+				if(root == null || !root.hasChildNodes())
+					return listAppointments;
+				
+				NodeList nodelist = root.getChildNodes();
 				for(int i=0; i< nodelist.getLength(); i++) {
 					Node elementAppointment = nodelist.item(i);
 					Appointment appointment = getAppointment(elementAppointment);
@@ -83,7 +88,7 @@ public class XmlAppointmentReader implements AppointmentReader {
 	
 	Document getDocument() throws ParserConfigurationException, SAXException, IOException {
 		File f = new File("appointments.xml");
-		if(!f.exists() || !f.isDirectory()) { 
+		if(!f.exists() || f.isDirectory()) { 
 		 	return null;
 		}
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();

@@ -25,7 +25,6 @@ public class XmlAppointmentWriter implements AppointmentWriter {
     public boolean write(List<Appointment> appointments) {
     	try {
     		Document doc = initializeRoot();
-    		Element rootElement = (Element)doc.getParentNode();
     		Element docElement = (Element)doc.getDocumentElement();
     		insertAppointments(doc,docElement,appointments);
     		saveFile(doc);
