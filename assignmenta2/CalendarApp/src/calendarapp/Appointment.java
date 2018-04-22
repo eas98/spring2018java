@@ -6,9 +6,9 @@ import java.time.format.DateTimeFormatter;
 public class Appointment {
 	private String appointmentNote;
 	private LocalDate appointmentDate;
-	Appointment(String appointmentNote, LocalDate appointmentDate) {
-		this.appointmentNote = appointmentNote;
+	public Appointment(LocalDate appointmentDate,String appointmentNote) {
 		this.appointmentDate = appointmentDate;
+		this.appointmentNote = appointmentNote;
 	}
 	public LocalDate getAppointmentDate() {
 		return this.appointmentDate;
@@ -31,5 +31,11 @@ public class Appointment {
 	}
 	public String getAppointmentNote() {
 		return this.appointmentNote;
+	}
+	
+	public static LocalDate parseAppointmentDate(String strAppointmetnDate) {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		LocalDate appointmentDate = LocalDate.parse(strAppointmetnDate, formatter);
+		return appointmentDate;
 	}
 }

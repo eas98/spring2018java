@@ -10,19 +10,33 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
+import java.util.Hashtable;
+import java.util.List;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+
 import org.jdesktop.swingx.JXMonthView;
 import org.jdesktop.swingx.calendar.DateSelectionModel.SelectionMode;
+import org.jdesktop.swingx.event.DateSelectionEvent;
+import org.jdesktop.swingx.event.DateSelectionListener;
 
 
 public class CalendarApp {
 	boolean appointmentNoteChanged =false; 
 	JXMonthView  monthView;
 	JTextArea textField;
+	Hashtable<String, Appointment> mapDateToNote;
+	final String defaultAppointmentNote = "Enter\nYour Appointment Note";
 	
+	public CalendarApp() {
+		AppointmentReader reader = new XmlAppointmentReader();
+		mapDateToNote = AppointmentHelper.convertAppointmentsToMap(reader.getAppointments());
+	}
 	private Component addTopPanel() {
 		
 		GridBagConstraints c1 = new GridBagConstraints();
@@ -46,13 +60,13 @@ public class CalendarApp {
     	
     	monthView = new JXMonthView();
         monthView.setTraversable(true);
-        monthView.addPropertyChangeListener(new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent e) {
-            	HandleDateSelectionChanged();
+        /*monthView.getSelectionModel().addDateSelectionListener(new DateSelectionListener() {
+            public void valueChanged(DateSelectionEvent e) {
+            	handleDateSelectionChanged();
             }
-        });
-        monthView.setSelectionMode(SelectionMode.SINGLE_INTERVAL_SELECTION);
+        });*/
+        
+        monthView.setSelectionMode(SelectionMode.SINGLE_SELECTION);
         monthView.setBorder(BorderFactory.createCompoundBorder(
         		monthView.getBorder(), 
     	        BorderFactory.createEmptyBorder(10, 5, 10, 5)));
@@ -66,12 +80,17 @@ public class CalendarApp {
     	textField.setBorder(BorderFactory.createCompoundBorder(
     			textField.getBorder(), 
     	        BorderFactory.createEmptyBorder(10, 5, 10, 5)));
-    	textField.addPropertyChangeListener(new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent e) {
-            	HandleAppointmentNoteChanged();
+    	textField.getDocument().addDocumentListener(new DocumentListener() {
+            public void insertUpdate(DocumentEvent e) {
+            	handleAppointmentNoteChanged();
             }
-        });
+            public void removeUpdate(DocumentEvent e) {
+            	handleAppointmentNoteChanged();
+            }
+            public void changedUpdate(DocumentEvent e) {
+                //handleAppointmentNoteChanged();
+            }
+    	});
     	
     	c.anchor = GridBagConstraints.EAST;
     	c.fill = GridBagConstraints.HORIZONTAL;
@@ -107,7 +126,7 @@ public class CalendarApp {
     	okButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				HandleOkButton();
+				handleOkButton();
 			}
     	});
     	okButton.setToolTipText("Save Changes");
@@ -125,7 +144,7 @@ public class CalendarApp {
     	cancelButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				HandleCancelButton();
+				handleCancelButton();
 			}
     	});
     	cancelButton.setToolTipText("Don't Save Changes");
@@ -176,25 +195,52 @@ public class CalendarApp {
         frame.setVisible(true);
     }
 
-	void HandleOkButton() {
+	void handleOkButton() {
 		if(appointmentNoteChanged) {
+			AppointmentWriter writer = new XmlAppointmentWriter();
+			List<Appointment> listAppointments = AppointmentHelper.convertAppointmentMapToArray(mapDateToNote);
+		
+			if(!writer.write(listAppointments)){
+				JOptionPane.showMessageDialog(null, "Failed to Save Appointments");	
+			}			
 			System.exit(0);	
 		} else {
-			JOptionPane.showMessageDialog(null, "You need to provide your appointment Note");
+			JOptionPane.showMessageDialog(null, "There is nothing to Change");
+			System.exit(0);	
 		}
 	}
-	void HandleCancelButton() {
+	
+	void handleCancelButton() {
 		System.exit(0);	
 	}
-	void HandleDateSelectionChanged() {
+	
+	void handleDateSelectionChanged() {
 		
+		//appointmentNoteChanged = false;
 	}
 	
-	void HandleAppointmentNoteChanged() {
-		appointmentNoteChanged = true;		
+	LocalDate getCurrentLocalDate() {
+		Date selectedDate = monthView.getSelectionDate();
+		if(selectedDate == null) {
+			selectedDate = new Date();
+		}
+		System.out.println(selectedDate.toString());
+		LocalDate selectedLocalDate = selectedDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		return selectedLocalDate;
+	
 	}
+	void handleAppointmentNoteChanged() {
+		appointmentNoteChanged = true;
+		LocalDate selectedLocalDate = getCurrentLocalDate();
+		String appointmentNote = this.textField.getText();
+		Appointment appointment = new Appointment(selectedLocalDate,appointmentNote);
+		this.mapDateToNote.put(appointment.getAppointmentDateAsString(),appointment);
+	
+	}
+	
 	public static void main(String[] args) {
 		CalendarApp app = new CalendarApp();
+
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
             	app.createAndShowGUI();
