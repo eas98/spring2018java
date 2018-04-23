@@ -1,3 +1,15 @@
 Notes About Calendar Project
+
 1. Used Maven to install org.swinglabs for 
-2. Screen Shots 
+2. Used Grid Layout to place controls automatically. 
+Controls positions automatically Change as Frame is resized.
+2. Screen Shots included to Display tests
+3. appointments.xml included as the database.
+4. Clicking on Cancel discard all changes
+5. Clicking Ok saves all changes and effectively overrides appointments.xml
+7. clicking on close button acts just like cancel, it close the app.
+8. you can change many dates appointments before clicking ok.
+9. you can keep going back and forth between days and see a combination of what in
+memory and not persisted yet as well as already persisted changes.
+10. notice that if you click ok without having changed an appointment notes. 
+it does not result in actually saving the file.
